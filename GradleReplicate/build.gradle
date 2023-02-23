@@ -1,0 +1,16 @@
+plugins {
+    id "java"
+    id "application"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "net.md-5:SpecialSource:1.11.0"
+}
+
+application {
+    mainClass = "fr.flowsqy.specialsourcetest.GradleReplicate"
+}
