@@ -3,6 +3,7 @@ package fr.flowsqy.specialsourcetest;
 import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
 import net.md_5.specialsource.JarRemapper;
+import net.md_5.specialsource.SpecialSource;
 import net.md_5.specialsource.provider.JarProvider;
 import net.md_5.specialsource.provider.JointProvider;
 
@@ -15,6 +16,8 @@ public class GradleReplicate {
 
     public static void main(String[] args) throws IOException {
         final File assetsFolder = new File("assets");
+
+        configureGlobal();
 
         final JarMapping mapping = loadMappings(assetsFolder);
 
@@ -39,6 +42,15 @@ public class GradleReplicate {
         remapper.setGenerateAPI(false);
         remapper.remapJar(originalJar, outputFile);
 
+    }
+
+    private static void configureGlobal() {
+        // Global settings
+        SpecialSource.kill_source = false;
+        SpecialSource.kill_lvt = false; // Could be set to true according to the wiki
+        SpecialSource.kill_generics = false;
+        SpecialSource.identifier = null;
+        SpecialSource.stable = false;
     }
 
     private static JarMapping loadMappings(File assetsFolder) throws IOException {
