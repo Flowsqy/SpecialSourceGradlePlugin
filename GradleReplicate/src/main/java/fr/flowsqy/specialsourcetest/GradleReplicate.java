@@ -38,13 +38,16 @@ public class GradleReplicate {
 
     private static void remap(final Jar originalJar, final File outputFile, final JarMapping mapping) throws IOException {
         // Do the remap
-        List<String> includes = new LinkedList<>(); // default : empty
+        // Includes class names
+        List<String> includes = new LinkedList<>(); // default : empty (Everything accepted)
+
+        boolean generateAPI = false; // default : false; Whether we process code and copy ressources
 
         // Create the remapper
         // Note : here we don't give any pre/post-processor.
         // Should use the pre-processor to change Field#getDeclaredField parameters
         JarRemapper remapper = new JarRemapper(null, mapping, null);
-        remapper.setGenerateAPI(false);
+        remapper.setGenerateAPI(generateAPI);
         remapper.remapJar(originalJar, outputFile, new HashSet<>(includes));
     }
 
