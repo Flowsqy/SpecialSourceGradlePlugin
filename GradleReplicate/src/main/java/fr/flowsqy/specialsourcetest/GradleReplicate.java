@@ -4,6 +4,8 @@ import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
 import net.md_5.specialsource.JarRemapper;
 import net.md_5.specialsource.SpecialSource;
+import net.md_5.specialsource.provider.ClassLoaderProvider;
+import net.md_5.specialsource.provider.InheritanceProvider;
 import net.md_5.specialsource.provider.JarProvider;
 import net.md_5.specialsource.provider.JointProvider;
 
@@ -25,15 +27,8 @@ public class GradleReplicate {
         final File originalJarFile = new File(assetsFolder, "Original.jar");
         final Jar originalJar = Jar.init(originalJarFile);
 
-        // Load dependencies
-        final File spigotDependency = new File(assetsFolder, "spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar");
-        final JointProvider jointProvider = new JointProvider();
-        jointProvider.add(new JarProvider(Jar.init(spigotDependency)));
-        // (Add all project dependencies)
-
-        // ?
-        jointProvider.add(new JarProvider(originalJar));
-        mapping.setFallbackInheritanceProvider(jointProvider);
+        final InheritanceProvider inheritanceProvider = createInheritanceProvider(assetsFolder, originalJar);
+        mapping.setFallbackInheritanceProvider(inheritanceProvider);
 
         final File outputFile = new File(assetsFolder, "Output.jar");
 
@@ -42,6 +37,35 @@ public class GradleReplicate {
         remapper.setGenerateAPI(false);
         remapper.remapJar(originalJar, outputFile);
 
+    }
+
+    private static InheritanceProvider createInheritanceProvider(File assetsFolder, Jar originalJar) throws IOException {
+        final JointProvider inheritanceProviders = new JointProvider();
+
+        // In the context of a GradlePlugin, this should be off
+        boolean useRuntimeClassPath = false; // default to false
+        if (useRuntimeClassPath) {
+            inheritanceProviders.add(new ClassLoaderProvider(ClassLoader.getSystemClassLoader()));
+        }
+
+        // Add every object that contains class that are inherited by the jar that we want remap
+        // Here all dependencies
+        final File spigotDependency = new File(assetsFolder, "spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar");
+        inheritanceProviders.add(new JarProvider(Jar.init(spigotDependency)));
+
+        // Add ourselves
+        inheritanceProviders.add(new JarProvider(originalJar));
+
+        /*
+        Can load custom inheritance map from a file (Shouldn't be useful in our case)
+
+        InheritanceMap inheritanceMap = new InheritanceMap();
+
+        inheritanceMap.load(reader, inverseClassMap);
+
+        inheritanceProviders.add(inheritanceMap);
+        */
+        return inheritanceProviders;
     }
 
     private static void configureGlobal() {
