@@ -6,22 +6,17 @@ import net.md_5.specialsource.JarRemapper;
 import net.md_5.specialsource.provider.JarProvider;
 import net.md_5.specialsource.provider.JointProvider;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GradleReplicate {
 
     public static void main(String[] args) throws IOException {
         final File assetsFolder = new File("assets");
 
-        // Load mappings
-        final File mappingFile = new File(assetsFolder, "mojang-server-mappings.txt");
-        boolean reverse = true;
-        final JarMapping mapping = new JarMapping();
-        BufferedReader mappingReader = new BufferedReader(new FileReader(mappingFile));
-        mapping.loadMappings(mappingReader, null, null, reverse);
+        final JarMapping mapping = loadMappings(assetsFolder);
 
         // Load original jar
         final File originalJarFile = new File(assetsFolder, "Original.jar");
@@ -44,6 +39,32 @@ public class GradleReplicate {
         remapper.setGenerateAPI(false);
         remapper.remapJar(originalJar, outputFile);
 
+    }
+
+    private static JarMapping loadMappings(File assetsFolder) throws IOException {
+        // Load mappings
+        final List<String> srgIn = new LinkedList<>(); // requires one element
+
+        final File testMappingFile = new File(assetsFolder, "mojang-server-mappings.txt");
+        srgIn.add(testMappingFile.getAbsolutePath());
+
+        boolean numeric = false; // default false
+        boolean reverse = true; // default false
+        String inShadeRelocation = null; // default null
+        String outShadeRelocation = null; // default null
+        List<String> excludedPackages = new LinkedList<>(); // default empty
+
+        final JarMapping mapping = new JarMapping();
+
+        for (String excludedPackage : excludedPackages) {
+            mapping.addExcludedPackage(excludedPackage);
+        }
+
+        //BufferedReader mappingReader = new BufferedReader(new FileReader(mappingFile));
+        for (String mappingFilePath : srgIn) {
+            mapping.loadMappings(mappingFilePath, reverse, numeric, inShadeRelocation, outShadeRelocation);
+        }
+        return mapping;
     }
 
 }
