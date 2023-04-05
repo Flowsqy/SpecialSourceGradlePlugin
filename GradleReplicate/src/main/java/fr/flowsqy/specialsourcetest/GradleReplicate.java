@@ -11,6 +11,7 @@ import net.md_5.specialsource.provider.JointProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,9 +38,11 @@ public class GradleReplicate {
 
     private static void remap(final Jar originalJar, final File outputFile, final JarMapping mapping) throws IOException {
         // Do the remap
+        List<String> includes = new LinkedList<>(); // default : empty
+
         JarRemapper remapper = new JarRemapper(null, mapping, null);
         remapper.setGenerateAPI(false);
-        remapper.remapJar(originalJar, outputFile);
+        remapper.remapJar(originalJar, outputFile, new HashSet<>(includes));
     }
 
     private static InheritanceProvider createInheritanceProvider(File assetsFolder, Jar originalJar) throws IOException {
