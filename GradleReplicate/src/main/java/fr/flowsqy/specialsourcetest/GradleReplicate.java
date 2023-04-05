@@ -40,6 +40,9 @@ public class GradleReplicate {
         // Do the remap
         List<String> includes = new LinkedList<>(); // default : empty
 
+        // Create the remapper
+        // Note : here we don't give any pre/post-processor.
+        // Should use the pre-processor to change Field#getDeclaredField parameters
         JarRemapper remapper = new JarRemapper(null, mapping, null);
         remapper.setGenerateAPI(false);
         remapper.remapJar(originalJar, outputFile, new HashSet<>(includes));
