@@ -32,11 +32,14 @@ public class GradleReplicate {
 
         final File outputFile = new File(assetsFolder, "Output.jar");
 
+        remap(originalJar, outputFile, mapping);
+    }
+
+    private static void remap(final Jar originalJar, final File outputFile, final JarMapping mapping) throws IOException {
         // Do the remap
         JarRemapper remapper = new JarRemapper(null, mapping, null);
         remapper.setGenerateAPI(false);
         remapper.remapJar(originalJar, outputFile);
-
     }
 
     private static InheritanceProvider createInheritanceProvider(File assetsFolder, Jar originalJar) throws IOException {
