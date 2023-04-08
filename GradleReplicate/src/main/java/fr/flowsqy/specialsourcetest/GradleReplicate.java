@@ -52,6 +52,7 @@ public class GradleReplicate {
     }
 
     private static InheritanceProvider createInheritanceProvider(File assetsFolder, Jar originalJar) throws IOException {
+        // Get the inheritance data to check for inherited properties
         final JointProvider inheritanceProviders = new JointProvider();
 
         // In the context of a GradlePlugin, this should be off
@@ -60,13 +61,15 @@ public class GradleReplicate {
             inheritanceProviders.add(new ClassLoaderProvider(ClassLoader.getSystemClassLoader()));
         }
 
-        // Add every object that contains class that are inherited by the jar that we want remap
-        // Here all dependencies
+        // Here add the spigot dependency to get inheritance properties
         final File spigotDependency = new File(assetsFolder, "spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar");
         inheritanceProviders.add(new JarProvider(Jar.init(spigotDependency)));
 
         // Add ourselves
-        inheritanceProviders.add(new JarProvider(originalJar));
+        boolean addOwnToInheritedCheck = false; // default false
+        if (addOwnToInheritedCheck) {
+            inheritanceProviders.add(new JarProvider(originalJar));
+        }
 
         /*
         Can load custom inheritance map from a file (Shouldn't be useful in our case)
