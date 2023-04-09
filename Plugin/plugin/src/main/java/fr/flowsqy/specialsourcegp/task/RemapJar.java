@@ -32,6 +32,8 @@ public abstract class RemapJar extends DefaultTask {
     @TaskAction
     public void remapJar() {
         System.out.println("Remap Jar");
+        System.out.println(getInput().get().getAsFile());
+        System.out.println(getOutput().get().getAsFile());
     }
 
 }

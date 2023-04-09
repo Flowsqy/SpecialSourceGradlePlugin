@@ -19,5 +19,7 @@ application {
 }
 
 tasks.register("remap", RemapJar) {
-    println "Hey !"
+    def jarTask = tasks.jar
+    input = jarTask.archiveFile
+    output = jarTask.destinationDirectory.file("Obf.jar")
 }
