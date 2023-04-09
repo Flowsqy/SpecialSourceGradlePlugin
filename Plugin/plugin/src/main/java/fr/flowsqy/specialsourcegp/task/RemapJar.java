@@ -1,10 +1,12 @@
 package fr.flowsqy.specialsourcegp.task;
 
 import fr.flowsqy.specialsourcegp.data.MappingData;
-import fr.flowsqy.specialsourcegp.data.ShadeRelocationData;
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Nested;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,9 +16,11 @@ public abstract class RemapJar extends DefaultTask {
     //TODO Add pre-processor settings
     //TODO Add post-processor settings
 
-    //TODO Add input (required, file)
+    @InputFile
+    public abstract RegularFileProperty getInput();
 
-    //TODO Add output (required, file)
+    @OutputFile
+    public abstract RegularFileProperty getOutput();
 
     @Nested
     public abstract MappingData getMapping();
