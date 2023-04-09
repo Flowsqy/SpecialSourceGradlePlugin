@@ -1,6 +1,9 @@
+import fr.flowsqy.specialsourcegp.task.RemapJar
+
 plugins {
     id "java"
     id "application"
+    id "com.github.flowsqy.specialsource" version "1.0.0"
 }
 
 repositories {
@@ -13,4 +16,8 @@ dependencies {
 
 application {
     mainClass = "fr.flowsqy.specialsourcetest.GradleReplicate"
+}
+
+tasks.register("remap", RemapJar) {
+    println "Hey !"
 }
