@@ -1,16 +1,19 @@
 package fr.flowsqy.specialsourcegp.data;
 
 import org.gradle.api.Action;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.Optional;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class MappingData {
 
-    //TODO Add mapping files (required, list files)
+    @InputFiles
+    public abstract ConfigurableFileCollection getMappingFiles();
 
     @Input
     @Optional

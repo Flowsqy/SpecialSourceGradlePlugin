@@ -1,6 +1,7 @@
 package fr.flowsqy.specialsourcegp.task;
 
 import fr.flowsqy.specialsourcegp.data.MappingData;
+import net.md_5.specialsource.JarMapping;
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFileProperty;
@@ -9,6 +10,8 @@ import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public abstract class RemapJar extends DefaultTask {
 
@@ -30,10 +33,9 @@ public abstract class RemapJar extends DefaultTask {
     }
 
     @TaskAction
-    public void remapJar() {
-        System.out.println("Remap Jar");
-        System.out.println(getInput().get().getAsFile());
-        System.out.println(getOutput().get().getAsFile());
+    public void remapJar() throws IOException {
+        final MappingLoader mappingLoader = new MappingLoader(this);
+        final JarMapping jarMapping = mappingLoader.load(getMapping());
     }
 
 }

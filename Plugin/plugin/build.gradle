@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation "net.md-5:SpecialSource:1.11.0"
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 }
