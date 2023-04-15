@@ -3,6 +3,7 @@ package fr.flowsqy.specialsourcegp.task;
 import fr.flowsqy.specialsourcegp.data.MappingData;
 import fr.flowsqy.specialsourcegp.data.ShadeRelocationData;
 import net.md_5.specialsource.JarMapping;
+import net.md_5.specialsource.provider.InheritanceProvider;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.tasks.TaskExecutionException;
