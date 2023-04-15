@@ -40,6 +40,11 @@ public class MappingLoader {
         for (File mappingFilePath : mappingFilesProperty.getFiles()) {
             jarMapping.loadMappings(mappingFilePath.getAbsolutePath(), reverse, numeric, inShadeRelocation, outShadeRelocation);
         }
+
+        final InheritanceLoader inheritanceLoader = new InheritanceLoader();
+        final InheritanceProvider inheritanceProvider = inheritanceLoader.load(mappingData.getInheritance(), jarMapping);
+        jarMapping.setFallbackInheritanceProvider(inheritanceProvider);
+
         return jarMapping;
     }
 
