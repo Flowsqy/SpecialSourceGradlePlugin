@@ -22,4 +22,7 @@ tasks.register("remap", RemapJar) {
     def jarTask = tasks.jar
     input = jarTask.archiveFile
     output = jarTask.destinationDirectory.file("Obf.jar")
+    mapping {
+        mappingFiles.from = "assets/mojang-server-mappings.txt"
+    }
 }
