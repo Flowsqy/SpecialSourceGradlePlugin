@@ -1,7 +1,6 @@
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '1.1.0'
 }
 
 repositories {
@@ -41,7 +40,7 @@ tasks.register('functionalTest', Test) {
     useJUnitPlatform()
 }
 
-gradlePlugin.testSourceSets(sourceSets.functionalTest)
+gradlePlugin.testSourceSets.add(sourceSets.functionalTest)
 
 tasks.named('check') {
     // Run the functional tests as part of `check`
