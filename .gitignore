@@ -1,11 +1,5 @@
 # Ignore Gradle project-specific cache directory
-.gradle/
+.gradle
 
 # Ignore Gradle build output directory
-build/
-
-# Maven target folder
-target/
-
-# Assets content (As we can not distribute mojang work)
-/GradleReplicate/assets/
+build
