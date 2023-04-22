@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InheritanceLoader {
 
@@ -29,7 +30,7 @@ public class InheritanceLoader {
 
         final List<RegularFile> jars = inheritanceData.getJars().get();
         if (!jars.isEmpty()) {
-            final Jar jar = Jar.init(jars.stream().map(RegularFile::getAsFile).toList());
+            final Jar jar = Jar.init(jars.stream().map(RegularFile::getAsFile).collect(Collectors.toList()));
             inheritanceProvider.add(new JarProvider(jar));
         }
 
