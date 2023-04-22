@@ -1,6 +1,9 @@
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '1.1.0'
+    // Allow jitpack to install the plugin
+    id 'maven-publish'
 }
 
 repositories {
