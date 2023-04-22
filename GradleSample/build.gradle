@@ -29,6 +29,10 @@ dependencies {
     mappings group: "org.spigotmc" ,name: "minecraft-server", version: "1.19.3-R0.1-SNAPSHOT", classifier: "maps-mojang", ext: "txt"
 }
 
+java {
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
+}
 
 tasks.register("remap-obf", RemapJar) {
     input = tasks.jar.archiveFile
